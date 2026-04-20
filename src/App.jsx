@@ -14,8 +14,6 @@ function App() {
     (project) => project.id === projectsState.selectedProject,
   );
 
-  console.log(selectedProject);
-
   const handleOpenNewProjectForm = () => {
     setProjectsState((prevstate) => {
       return { ...prevstate, selectedProject: null };
@@ -43,6 +41,15 @@ function App() {
     });
   };
 
+  const handleDeleteProject = (id) => {
+    setProjectsState((prev) => {
+      return {
+        selectedProject: undefined,
+        projects: prev.projects.filter((proj) => proj.id !== id),
+      };
+    });
+  };
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar
@@ -57,7 +64,10 @@ function App() {
         <NoProjectSelected onStartAddProject={handleOpenNewProjectForm} />
       )}
       {projectsState.selectedProject && (
-        <ProjectDetails project={selectedProject} />
+        <ProjectDetails
+          project={selectedProject}
+          onDeleteProject={handleDeleteProject}
+        />
       )}
     </main>
   );
