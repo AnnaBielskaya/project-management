@@ -16,19 +16,26 @@ function App() {
   };
 
   const handleAddProject = (projectData) => {
+    const projId = Math.random();
     setProjectsState((prev) => {
       const newProject = {
         ...projectData,
-        id: Math.random(),
+        id: projId,
       };
 
-      return { ...prev, projects: [...prev.projects, newProject] };
+      return {
+        selectedProject: undefined,
+        projects: [...prev.projects, newProject],
+      };
     });
   };
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onStartAddProject={handleOpenNewProjectForm} />
+      <ProjectsSidebar
+        projects={projectsState.projects}
+        onStartAddProject={handleOpenNewProjectForm}
+      />
       {projectsState.selectedProject === null && (
         <NewProject onAddNewProject={handleAddProject} />
       )}

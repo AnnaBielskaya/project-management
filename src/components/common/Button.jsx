@@ -6,6 +6,8 @@ const VARIANTS = {
   transparentBtn: "text-stone-800 hover:text-stone-950",
   blackBtn:
     "px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950 mx-8",
+  menuBtn:
+    "w-full text-left px-2 py-1 rounded-md my-1 text-stone-400 hover:text-stone-100 hover:bg-stone-800",
 };
 
 const Button = ({ title, variant = "defaultBtn", className, ...props }) => {
