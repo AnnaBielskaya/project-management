@@ -1,19 +1,16 @@
 import React from "react";
 import Input from "./common/Input";
+import Button from "./common/Button";
 
 const NewProject = () => {
   return (
     <div className="w-[35rem] mt-16">
       <menu className="flex items-center justify-end gap-4 my-4">
         <li>
-          <button className="text-stone-800 hover:text-stone-950">
-            Cancel
-          </button>
+          <Button variant="transparentBtn" title="Cancel" />
         </li>
         <li>
-          <button className="px-6 py-2 rounded-md bg-stone-800 text-stone-50 hover:bg-stone-950 mx-8">
-            Save
-          </button>
+          <Button variant="blackBtn" title="Save" />
         </li>
       </menu>
       <div>
