@@ -8,11 +8,21 @@ function App() {
     selectedProject: undefined,
     projects: [],
   });
+
+  const handleAddProject = () => {
+    console.log("Henlo");
+    setProjectsState((prevstate) => {
+      return { ...prevstate, selectedProject: null };
+    });
+  };
+
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar />
-      {projectsState.selectedProject && <NewProject />}
-      {!projectsState.selectedProject && <NoProjectSelected />}
+      {projectsState.selectedProject === null && <NewProject />}
+      {projectsState.selectedProject === undefined && (
+        <NoProjectSelected onStartAddProject={handleAddProject} />
+      )}
     </main>
   );
 }
