@@ -1,7 +1,12 @@
 import React from "react";
 import Button from "./common/Button";
 
-const ProjectsSidebar = ({ onStartAddProject, projects, selectedId }) => {
+const ProjectsSidebar = ({
+  onStartAddProject,
+  projects,
+  selectedId,
+  onSelectProject,
+}) => {
   return (
     <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
       <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">
@@ -12,9 +17,20 @@ const ProjectsSidebar = ({ onStartAddProject, projects, selectedId }) => {
       </div>
       <ul className="mt-4">
         {projects.map((proj) => {
+          let cssClasses = "";
+
+          if (proj.id === selectedId) {
+            cssClasses = "bg-stone-800 text-stone-200";
+          }
+
           return (
             <li key={proj.id}>
-              <Button variant="menuBtn" title={proj.title} />
+              <Button
+                className={cssClasses}
+                onClick={() => onSelectProject(proj.id)}
+                variant="menuBtn"
+                title={proj.title}
+              />
             </li>
           );
         })}
