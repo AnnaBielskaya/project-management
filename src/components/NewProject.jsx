@@ -1,24 +1,31 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Input from "./common/Input";
 import Button from "./common/Button";
+import { projectSchema } from "../schemas/project.schema";
 
 const NewProject = ({ onAddNewProject }) => {
+  const [errors, setErrors] = useState({});
   const title = useRef();
   const description = useRef();
   const dueDate = useRef();
 
   const handleSave = () => {
-    const enteredTitle = title.current.value;
-    const enteredDescription = description.current.value;
-    const enteredDueDate = dueDate.current.value;
+    const newProj = {
+      title: title.current.value,
+      description: description.current.value,
+      dueDate: dueDate.current.value,
+    };
 
-    //validation
+    const validation = projectSchema.safeParse(newProj);
 
-    onAddNewProject({
-      title: enteredTitle,
-      description: enteredDescription,
-      dueDate: enteredDueDate,
-    });
+    if (!validation.success) {
+      const formattedErrors = validation.error.format();
+      setErrors(formattedErrors);
+      return;
+    }
+
+    onAddNewProject(newProj);
+    setErrors({});
   };
   return (
     <div className="w-[35rem] mt-16">
@@ -31,9 +38,24 @@ const NewProject = ({ onAddNewProject }) => {
         </li>
       </menu>
       <div>
-        <Input type="text" ref={title} label="Title" />
-        <Input ref={description} label="Description" textarea />
-        <Input type="date" ref={dueDate} label="Due Date" />
+        <Input
+          type="text"
+          ref={title}
+          label="Title"
+          error={errors.title?._errors[0]}
+        />
+        <Input
+          ref={description}
+          label="Description"
+          textarea
+          error={errors.description?._errors[0]}
+        />
+        <Input
+          type="date"
+          ref={dueDate}
+          label="Due Date"
+          error={errors.dueDate?._errors[0]}
+        />
       </div>
     </div>
   );
