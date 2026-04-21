@@ -4,17 +4,20 @@ import Button from "../common/Button";
 import { useRef } from "react";
 
 const NewTask = ({ projId, onAddNewTask }) => {
-  const newTask = useRef();
+  const taskRef = useRef();
 
   const handleChange = () => {
-    console.log(newTask.current.value);
-    newTask.current.value = "";
-    onAddNewTask(newTask, projId);
+    const enteredTask = taskRef.current.value;
+    if (enteredTask.trim().length === 0) {
+      return;
+    }
+    onAddNewTask(enteredTask, projId);
+    taskRef.current.value = "";
   };
 
   return (
     <div className="w-full flex flex-row gap-4 items-center rounded-sm">
-      <Input ref={newTask} type="text" />
+      <Input ref={taskRef} type="text" />
       <Button onClick={handleChange} title="Add Task" />
     </div>
   );

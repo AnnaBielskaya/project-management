@@ -20,7 +20,7 @@ const ProjectDetails = ({ project, onDeleteProject, onAddNewTask }) => {
         <p className="mb-4 text-stone-400">{project.description}</p>
         <p className="text-stone-600 whitespace-pre-wrap">{project.dueDate}</p>
       </header>
-      <Tasks projId={project.id} onAddNewTask={onAddNewTask} />
+      <Tasks project={project} onAddNewTask={onAddNewTask} />
     </div>
   );
 };

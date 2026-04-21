@@ -29,7 +29,7 @@ function App() {
   const handleAddTask = (task, id) => {
     setProjectsState((prevstate) => {
       const newTask = {
-        ...task,
+        text: task,
         id: crypto.randomUUID(),
       };
 
