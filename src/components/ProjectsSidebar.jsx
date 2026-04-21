@@ -17,16 +17,9 @@ const ProjectsSidebar = ({
       </div>
       <ul className="mt-4">
         {projects.map((proj) => {
-          let cssClasses = "";
-
-          if (proj.id === selectedId) {
-            cssClasses = "bg-stone-800 text-stone-200";
-          }
-
           return (
             <li key={proj.id}>
               <Button
-                className={cssClasses}
                 onClick={() => onSelectProject(proj.id)}
                 variant="menuBtn"
                 title={proj.title}
