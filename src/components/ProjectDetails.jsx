@@ -1,8 +1,9 @@
 import React from "react";
 import Button from "./common/Button";
 import { formatDate } from "./../utils/dateformatter";
+import Tasks from "./Tasks/Tasks";
 
-const ProjectDetails = ({ project, onDeleteProject }) => {
+const ProjectDetails = ({ project, onDeleteProject, onAddNewTask }) => {
   return (
     <div className="w-[35rem] mt-16">
       <header className="pb-4 mb-4 border-b-2 border-stone-300">
@@ -19,6 +20,7 @@ const ProjectDetails = ({ project, onDeleteProject }) => {
         <p className="mb-4 text-stone-400">{project.description}</p>
         <p className="text-stone-600 whitespace-pre-wrap">{project.dueDate}</p>
       </header>
+      <Tasks projId={project.id} onAddNewTask={onAddNewTask} />
     </div>
   );
 };

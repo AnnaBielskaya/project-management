@@ -26,9 +26,30 @@ function App() {
     });
   };
 
+  const handleAddTask = (task, id) => {
+    setProjectsState((prevstate) => {
+      const newTask = {
+        ...task,
+        id: crypto.randomUUID(),
+      };
+
+      const updatedProjects = prevstate.projects.map((project) => {
+        if (project.id === id) {
+          return {
+            ...project,
+            tasks: project.tasks ? [...project.tasks, newTask] : [newTask],
+          };
+        }
+        return project;
+      });
+
+      return { ...prevstate, selectedProject: id, projects: updatedProjects };
+    });
+  };
+
   const handleAddProject = (projectData) => {
-    const projId = Math.random();
-    setProjectsState((prev) => {
+    const projId = crypto.randomUUID();
+    setProjectsState((prevstate) => {
       const newProject = {
         ...projectData,
         id: projId,
@@ -36,7 +57,7 @@ function App() {
 
       return {
         selectedProject: undefined,
-        projects: [...prev.projects, newProject],
+        projects: [...prevstate.projects, newProject],
       };
     });
   };
@@ -67,6 +88,7 @@ function App() {
         <ProjectDetails
           project={selectedProject}
           onDeleteProject={handleDeleteProject}
+          onAddNewTask={handleAddTask}
         />
       )}
     </main>
