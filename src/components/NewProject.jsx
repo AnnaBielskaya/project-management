@@ -5,7 +5,7 @@ import { projectSchema } from "../schemas/project.schema";
 import { ProjectsContext } from "./store/projects-context";
 
 const NewProject = () => {
-  const { addProject } = useContext(ProjectsContext);
+  const { addProject, selectProject } = useContext(ProjectsContext);
   const [errors, setErrors] = useState({});
   const title = useRef();
   const description = useRef();
@@ -33,7 +33,11 @@ const NewProject = () => {
     <div className="w-[35rem] mt-16">
       <menu className="flex items-center justify-end gap-4 my-4">
         <li>
-          <Button variant="transparentBtn" title="Cancel" />
+          <Button
+            onClick={() => selectProject(undefined)}
+            variant="transparentBtn"
+            title="Cancel"
+          />
         </li>
         <li>
           <Button onClick={handleSave} variant="blackBtn" title="Save" />
