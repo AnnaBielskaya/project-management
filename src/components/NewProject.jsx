@@ -1,22 +1,24 @@
-import React, { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import Input from "./common/Input";
 import Button from "./common/Button";
 import { projectSchema } from "../schemas/project.schema";
+import { ProjectsContext } from "./store/projects-context";
 
-const NewProject = ({ onAddNewProject }) => {
+const NewProject = () => {
+  const { addProject } = useContext(ProjectsContext);
   const [errors, setErrors] = useState({});
   const title = useRef();
   const description = useRef();
   const dueDate = useRef();
 
   const handleSave = () => {
-    const newProj = {
+    const project = {
       title: title.current.value,
       description: description.current.value,
       dueDate: dueDate.current.value,
     };
 
-    const validation = projectSchema.safeParse(newProj);
+    const validation = projectSchema.safeParse(project);
 
     if (!validation.success) {
       const formattedErrors = validation.error.format();
@@ -24,7 +26,7 @@ const NewProject = ({ onAddNewProject }) => {
       return;
     }
 
-    onAddNewProject(newProj);
+    addProject(project);
     setErrors({});
   };
   return (

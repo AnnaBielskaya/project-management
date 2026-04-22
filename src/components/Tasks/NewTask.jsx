@@ -1,9 +1,11 @@
-import React, { useState } from "react";
 import Input from "../common/Input";
 import Button from "../common/Button";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { ProjectsContext } from "../store/projects-context";
 
-const NewTask = ({ projId, onAddNewTask }) => {
+const NewTask = () => {
+  const { addTask } = useContext(ProjectsContext);
+
   const taskRef = useRef();
 
   const handleChange = () => {
@@ -11,7 +13,7 @@ const NewTask = ({ projId, onAddNewTask }) => {
     if (enteredTask.trim().length === 0) {
       return;
     }
-    onAddNewTask(enteredTask, projId);
+    addTask(enteredTask);
     taskRef.current.value = "";
   };
 

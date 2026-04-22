@@ -8,13 +8,19 @@ const INITIAL_STATE = {
       title: "Learn React Context",
       description: "Keep it simple!",
     },
+    {
+      id: "p2",
+      title: "Learn Redux Toolkit",
+      description: "You're gonna struggle with this one for real!",
+    },
   ],
 };
 
 export const ProjectsContext = createContext({
-  selectedProject: undefined,
+  selectedProjectId: undefined,
   projects: [],
   selectProject: () => {},
+  openNewProjectForm: () => {},
   addProject: () => {},
   deleteProject: () => {},
   addTask: () => {},
@@ -23,22 +29,41 @@ export const ProjectsContext = createContext({
 const projectsReducer = (state, action) => {
   switch (action.type) {
     case "SELECT_PROJECT":
-      //TODO
+      return { ...state, selectedProjectId: action.payload.id };
 
-      return;
+    case "OPEN_NEW_PROJECT_FORM":
+      return { ...state, selectedProjectId: null };
 
     case "ADD_PROJECT":
       //TODO
+      console.log("comiing soon");
+      return state;
 
-      return;
     case "DELETE_PROJECT":
       //TODO
+      console.log("comiing soon");
 
-      return;
-    case "ADD_TASK":
-      //TODO
+      return state;
+    case "ADD_TASK": {
+      const task = {
+        text: action.payload.task,
+        id: crypto.randomUUID(),
+      };
 
-      return;
+      const updatedProjects = state.projects.map((proj) => {
+        if (proj.id === state.selectedProjectId) {
+          const tasks = proj.tasks ? [...proj.tasks, task] : [task];
+          return { ...proj, tasks };
+        }
+        return proj;
+      });
+      return {
+        ...state,
+        projects: updatedProjects,
+      };
+    }
+    default:
+      return state;
   }
 };
 
@@ -48,16 +73,20 @@ export const ProjectsContextProvider = ({ children }) => {
     INITIAL_STATE,
   );
 
+  const handleOpenNewProjectForm = () => {
+    projectsDispatch({ type: "OPEN_NEW_PROJECT_FORM", payload: null });
+  };
+
   const handleSelectProject = (id) => {
     projectsDispatch({
       type: "SELECT_PROJECT",
       payload: { id },
     });
   };
-  const handleAddTask = (id, task) => {
+  const handleAddTask = (task) => {
     projectsDispatch({
       type: "ADD_TASK",
-      payload: { id, task },
+      payload: { task },
     });
   };
   const handleAddProject = (project) => {
@@ -76,6 +105,7 @@ export const ProjectsContextProvider = ({ children }) => {
   const ctxtValue = {
     ...projectsState,
     selectProject: handleSelectProject,
+    openNewProjectForm: handleOpenNewProjectForm,
     addProject: handleAddProject,
     deleteProject: handleDeleteProject,
     addTask: handleAddTask,

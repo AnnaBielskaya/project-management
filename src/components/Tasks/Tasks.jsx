@@ -1,13 +1,12 @@
-import React from "react";
 import NewTask from "./NewTask";
 
-const Tasks = ({ project, onAddNewTask }) => {
+const Tasks = ({ project }) => {
   if (!project) return null;
 
   return (
     <section>
       <h2 className="text-3xl font-bold text-stone-800 mb-4">Tasks</h2>
-      <NewTask projId={project.id} onAddNewTask={onAddNewTask} />
+      <NewTask />
 
       {(!project.tasks || project.tasks.length === 0) && (
         <p className="text-stone-800 my-4">
