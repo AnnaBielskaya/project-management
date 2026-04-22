@@ -34,10 +34,16 @@ const projectsReducer = (state, action) => {
     case "OPEN_NEW_PROJECT_FORM":
       return { ...state, selectedProjectId: null };
 
-    case "ADD_PROJECT":
-      //TODO
-      console.log("comiing soon");
-      return state;
+    case "ADD_PROJECT": {
+      const project = {
+        ...action.payload.project,
+        id: crypto.randomUUID(),
+      };
+
+      const updProjects = [...state.projects, project];
+
+      return { ...state, selectedProjectId: project.id, projects: updProjects };
+    }
 
     case "DELETE_PROJECT": {
       const updProjects = state.projects.filter(
