@@ -3,6 +3,7 @@ import NewProject from "./components/NewProject";
 import NoProjectSelected from "./components/NoProjectSelected";
 import ProjectsSidebar from "./components/ProjectsSidebar";
 import ProjectDetails from "./components/ProjectDetails";
+import { ProjectsContextProvider } from "./components/store/projects-context";
 
 function App() {
   const [projectsState, setProjectsState] = useState({
@@ -72,26 +73,24 @@ function App() {
   };
 
   return (
-    <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar
-        projects={projectsState.projects}
-        onStartAddProject={handleOpenNewProjectForm}
-        onSelectProject={handleSelectProject}
-      />
-      {projectsState.selectedProject === null && (
-        <NewProject onAddNewProject={handleAddProject} />
-      )}
-      {projectsState.selectedProject === undefined && (
-        <NoProjectSelected onStartAddProject={handleOpenNewProjectForm} />
-      )}
-      {projectsState.selectedProject && (
-        <ProjectDetails
-          project={selectedProject}
-          onDeleteProject={handleDeleteProject}
-          onAddNewTask={handleAddTask}
-        />
-      )}
-    </main>
+    <ProjectsContextProvider>
+      <main className="h-screen my-8 flex gap-8">
+        <ProjectsSidebar />
+        {projectsState.selectedProject === null && (
+          <NewProject onAddNewProject={handleAddProject} />
+        )}
+        {projectsState.selectedProject === undefined && (
+          <NoProjectSelected onStartAddProject={handleOpenNewProjectForm} />
+        )}
+        {projectsState.selectedProject && (
+          <ProjectDetails
+            project={selectedProject}
+            onDeleteProject={handleDeleteProject}
+            onAddNewTask={handleAddTask}
+          />
+        )}
+      </main>
+    </ProjectsContextProvider>
   );
 }
 
