@@ -39,11 +39,16 @@ const projectsReducer = (state, action) => {
       console.log("comiing soon");
       return state;
 
-    case "DELETE_PROJECT":
-      //TODO
-      console.log("comiing soon");
-
-      return state;
+    case "DELETE_PROJECT": {
+      const updProjects = state.projects.filter(
+        (proj) => proj.id !== action.payload.id,
+      );
+      return {
+        ...state,
+        selectedProjectId: undefined,
+        projects: updProjects,
+      };
+    }
     case "ADD_TASK": {
       const task = {
         text: action.payload.task,

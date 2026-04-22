@@ -7,7 +7,7 @@ import { ProjectsContext } from "./components/store/projects-context";
 
 function App() {
   const { selectedProjectId } = useContext(ProjectsContext);
-
+  /*
   const handleAddProject = (projectData) => {
     const projId = crypto.randomUUID();
     setProjectsState((prevstate) => {
@@ -22,16 +22,7 @@ function App() {
       };
     });
   };
-
-  const handleDeleteProject = (id) => {
-    setProjectsState((prev) => {
-      return {
-        selectedProject: undefined,
-        projects: prev.projects.filter((proj) => proj.id !== id),
-      };
-    });
-  };
-
+*/
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar />
